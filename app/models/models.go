@@ -7,6 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/robfig/revel"
 	_ "github.com/ziutek/mymysql/mysql"
+	"os"
 	"path"
 )
 
@@ -16,9 +17,14 @@ func Db() (*gorp.DbMap, error) {
 	if dbInstance == nil {
 		driverName, _ := revel.Config.String("db.driverName")
 		dataSourceName, _ := revel.Config.String("db.dataSourceName")
-		// For SQLite, make the source relative to the app path
 		if driverName == "sqlite3" {
+			// For SQLite, make the source relative to the app path and make
+			// sure the dir exists
 			dataSourceName = path.Join(revel.AppPath, dataSourceName)
+			err := os.MkdirAll(path.Dir(dataSourceName), 0775)
+			if err != nil {
+				return nil, err
+			}
 		}
 		db, err := sql.Open(driverName, dataSourceName)
 		if err != nil {
