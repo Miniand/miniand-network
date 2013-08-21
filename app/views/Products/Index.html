@@ -1,23 +1,19 @@
 {{set . "title" "Product"}}
 {{template "header.html" .}}
 
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <div class="hero-text">
-        <h1>It works!  PRODDDUUUCT</h1>
-        <p></p>
-      </div>
-    </div>
-  </div>
-</header>
+<h1>Products</h1>
 
-<div class="container">
-  <div class="row">
-    <div class="span6">
-      {{template "flash.html" .}}
-    </div>
-  </div>
-</div>
+<a href="/products/new">New</a>
+
+<table>
+<tr>
+<th>Name</th>
+</tr>
+{{range .products}}
+<tr>
+<td>{{.Name}}
+</tr>
+{{end}}
+</table>
 
 {{template "footer.html" .}}

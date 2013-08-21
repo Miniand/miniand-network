@@ -1,0 +1,21 @@
+{{set . "title" "New Product"}}
+{{template "header.html" .}}
+
+<h1>New Product</h1>
+
+<form action="{{url "Products.Create"}}" method="POST">
+	{{with $field := field "p.Name" .}}
+	<p class="{{$field.ErrorClass}}">
+		<label>Name:
+			<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+			<span class="error">{{$field.Error}}</span>
+		</label>
+	</p>
+	{{end}}
+	<p class="buttons">
+		<input type="submit" value="Create" />
+		<a class="button" href="{{url "Products.Index"}}">Cancel</a>
+	</p>
+</form>
+
+{{template "footer.html" .}}

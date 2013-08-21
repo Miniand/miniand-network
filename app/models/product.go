@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/coopernurse/gorp"
+	"github.com/robfig/revel"
 	"time"
 )
 
@@ -24,4 +25,8 @@ func (p *Product) PreInsert(s gorp.SqlExecutor) error {
 func (p *Product) PreUpdate(s gorp.SqlExecutor) error {
 	p.Updated = time.Now().UnixNano()
 	return nil
+}
+
+func (p *Product) Validate(v *revel.Validation) {
+	v.Check(p.Name, revel.Required{}, revel.MinSize{1})
 }

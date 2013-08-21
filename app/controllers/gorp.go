@@ -39,6 +39,7 @@ func Init() {
 	Dbm.AddTable(models.ProductVariant{}).SetKeys(true, "Id")
 	Dbm.AddTable(models.Shop{}).SetKeys(true, "Id")
 	Dbm.AddTable(models.ShopProduct{}).SetKeys(true, "Id")
+	Dbm.AddTable(models.User{}).SetKeys(true, "Id")
 
 	Dbm.TraceOn("[gorp]", revel.INFO)
 	if err := Dbm.CreateTablesIfNotExists(); err != nil {

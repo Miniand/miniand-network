@@ -2,10 +2,10 @@ package controllers
 
 import "github.com/robfig/revel"
 
-type App struct {
+type Application struct {
 	GorpController
 }
 
-func (c App) Index() revel.Result {
+func (c Application) Index() revel.Result {
 	return c.Render()
 }
