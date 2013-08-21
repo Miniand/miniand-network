@@ -1,9 +1,7 @@
 package app
 
 import (
-	appJobs "github.com/Miniand/miniand-network/app/jobs"
 	"github.com/robfig/revel"
-	"github.com/robfig/revel/modules/jobs/app/jobs"
 )
 
 func init() {
@@ -22,6 +20,5 @@ func init() {
 	}
 
 	revel.OnAppStart(func() {
-		jobs.Now(appJobs.InitialiseDb{})
 	})
 }

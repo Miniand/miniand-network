@@ -13,8 +13,11 @@ type ProductVariant struct {
 	Name        string
 	Active      bool
 	Price       int64
+	Cost        int64
 	Description string
 	SKU         string
+	Weight      int64
+	Quantity    int64
 }
 
 func (pv *ProductVariant) PreInsert(s gorp.SqlExecutor) error {

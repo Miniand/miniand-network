@@ -10,6 +10,6 @@ type ProductTest struct {
 }
 
 func (t ProductTest) TestThatProductSaves() {
-	_, err := models.Db()
-	t.AssertEqual(nil, err)
+	p := models.Product{}
+	t.AssertEqual(0, p.Id)
 }
