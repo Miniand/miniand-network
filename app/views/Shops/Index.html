@@ -1,0 +1,19 @@
+{{set . "title" "Shop"}}
+{{template "header.html" .}}
+
+<h1>Shops</h1>
+
+<a href="/shops/new">New</a>
+
+<table>
+<tr>
+<th>Name</th>
+</tr>
+{{range .shops}}
+<tr>
+<td>{{.Name}}
+</tr>
+{{end}}
+</table>
+
+{{template "footer.html" .}}

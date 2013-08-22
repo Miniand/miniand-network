@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/coopernurse/gorp"
+	"github.com/robfig/revel"
 	"time"
 )
 
@@ -21,5 +22,21 @@ func (sh *Shop) PreInsert(s gorp.SqlExecutor) error {
 
 func (sh *Shop) PreUpdate(s gorp.SqlExecutor) error {
 	sh.Updated = time.Now().UnixNano()
+	return nil
+}
+
+func (sh *Shop) Validate(v *revel.Validation) {
+	v.Check(sh.Name, revel.Required{}, revel.MinSize{1})
+}
+
+func FindShopByName(name string, exe gorp.SqlExecutor) *Shop {
+	var shops []*Shop
+	_, err := exe.Select(&shops, "SELECT * FROM Shop WHERE name=? LIMIT 1", name)
+	if err != nil {
+		panic(err)
+	}
+	if len(shops) > 0 {
+		return shops[0]
+	}
 	return nil
 }

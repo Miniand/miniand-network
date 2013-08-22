@@ -17,5 +17,9 @@ GET     /products/                              Products.Index
 POST    /products/                              Products.Create
 GET     /products/new                           Products.New
 
+GET     /shops/                                 Shops.Index
+POST    /shops/                                 Shops.Create
+GET     /shops/new                              Shops.New
+
 # Catch all
 *       /:controller/:action                    :controller.:action
