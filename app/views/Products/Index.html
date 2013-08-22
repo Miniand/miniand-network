@@ -1,19 +1,23 @@
 {{set . "title" "Product"}}
 {{template "header.html" .}}
 
-<h1>Products</h1>
+<div class="container">
+	<div class="page-header">
+		<h1>Products <small>blah</small></h1>
+	</div>
 
-<a href="/products/new">New</a>
+	<a href="/products/new">New</a>
 
-<table>
-<tr>
-<th>Name</th>
-</tr>
-{{range .products}}
-<tr>
-<td>{{.Name}}
-</tr>
-{{end}}
-</table>
+	<table>
+		<tr>
+			<th>Name</th>
+		</tr>
+		{{range .products}}
+		<tr>
+			<td>{{.Name}}</td>
+		</tr>
+		{{end}}
+	</table>
+</div>
 
 {{template "footer.html" .}}

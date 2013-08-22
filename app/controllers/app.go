@@ -11,11 +11,17 @@ type Application struct {
 	Shop *models.Shop
 }
 
-func (c *Application) DetectShopNameInHost() revel.Result {
+func (c *Application) DetectShopIdentifierInHost() revel.Result {
+	// Defaults
+	c.RenderArgs["shopHue"] = 125
 	r := regexp.MustCompile(`\.`)
 	hostParts := r.Split(c.Request.Host, 2)
 	if len(hostParts) > 1 {
-		c.Shop = models.FindShopByName(hostParts[0], c.Txn)
+		c.Shop = models.FindShopByIdentifier(hostParts[0], c.Txn)
+		c.RenderArgs["Shop"] = c.Shop
+		if c.Shop != nil {
+			c.RenderArgs["shopHue"] = c.Shop.Hue
+		}
 	}
 	return nil
 }

@@ -1,0 +1,31 @@
+@font-face {
+	font-family: Righteous;
+	src: url('../fonts/Righteous-Regular.ttf');
+}
+
+body {
+	padding-top: 70px;
+}
+
+.logo {
+	display: inline-block;
+	border-radius: 50%;
+	margin-top: -0.2em;
+	width: 1.1em;
+	height: 1.1em;
+	vertical-align: middle;
+}
+
+.navbar-brand {
+	font-family: Righteous, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Righteous, sans-serif;
+}
+
+.content {
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
+	background-image: url('../images/bg.png');
+}

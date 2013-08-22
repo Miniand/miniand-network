@@ -12,6 +12,22 @@
 		</label>
 	</p>
 	{{end}}
+	{{with $field := field "s.Identifier" .}}
+	<p class="{{$field.ErrorClass}}">
+		<label>Identifier:
+			<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+			<span class="error">{{$field.Error}}</span>
+		</label>
+	</p>
+	{{end}}
+	{{with $field := field "s.Hue" .}}
+	<p class="{{$field.ErrorClass}}">
+		<label>Hue:
+			<input type="range" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="$('body').css('background-color', 'hsl(' + $(this).val() + ',61%,55%)');" />
+			<span class="error">{{$field.Error}}</span>
+		</label>
+	</p>
+	{{end}}
 	<p class="buttons">
 		<input type="submit" value="Create" />
 		<a class="button" href="{{url "Shops.Index"}}">Cancel</a>

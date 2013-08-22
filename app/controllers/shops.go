@@ -34,5 +34,5 @@ func (c Shops) Create(s models.Shop) revel.Result {
 	if err != nil {
 		panic(err)
 	}
-	return c.Redirect(routes.Shops.Index())
+	return c.Redirect(ShopUrl(s.Identifier, routes.Shops.Index()))
 }

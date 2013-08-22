@@ -1,19 +1,30 @@
 {{set . "title" "Shop"}}
 {{template "header.html" .}}
 
-<h1>Shops</h1>
-
-<a href="/shops/new">New</a>
-
-<table>
-<tr>
-<th>Name</th>
-</tr>
-{{range .shops}}
-<tr>
-<td>{{.Name}}
-</tr>
-{{end}}
-</table>
+<div class="content">
+	<div class="container">
+		<div class="page-header">
+			<h1>Shops</h1>
+		</div>
+		<a href="/shops/new">New</a>
+		<table>
+			<tr>
+				<th>Name</th>
+			</tr>
+			<tr>
+				<td>
+					<a href="{{shopUrl "" "Shops.Index"}}">Root</a>
+				</td>
+			</tr>
+			{{range .shops}}
+			<tr>
+				<td>
+					<a href="{{shopUrl .Identifier "Shops.Index"}}">{{.Name}}</a>
+				</td>
+			</tr>
+			{{end}}
+		</table>
+	</div>
+</div>
 
 {{template "footer.html" .}}
