@@ -1,37 +1,43 @@
 {{set . "title" "New Shop"}}
 {{template "header.html" .}}
 
-<h1>New Shop</h1>
+<div class="content">
+	<div class="container">
+		<div class="page-heading">
+			<h1>New Shop</h1>
+		</div>
 
-<form action="{{url "Shops.Create"}}" method="POST">
-	{{with $field := field "s.Name" .}}
-	<p class="{{$field.ErrorClass}}">
-		<label>Name:
-			<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
-			<span class="error">{{$field.Error}}</span>
-		</label>
-	</p>
-	{{end}}
-	{{with $field := field "s.Identifier" .}}
-	<p class="{{$field.ErrorClass}}">
-		<label>Identifier:
-			<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
-			<span class="error">{{$field.Error}}</span>
-		</label>
-	</p>
-	{{end}}
-	{{with $field := field "s.Hue" .}}
-	<p class="{{$field.ErrorClass}}">
-		<label>Hue:
-			<input type="range" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="$('body').css('background-color', 'hsl(' + $(this).val() + ',61%,55%)');" />
-			<span class="error">{{$field.Error}}</span>
-		</label>
-	</p>
-	{{end}}
-	<p class="buttons">
-		<input type="submit" value="Create" />
-		<a class="button" href="{{url "Shops.Index"}}">Cancel</a>
-	</p>
-</form>
+		<form action="{{url "Shops.Create"}}" method="POST">
+			{{with $field := field "s.Name" .}}
+			<p class="{{$field.ErrorClass}}">
+				<label>Name:
+					<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+					<span class="error">{{$field.Error}}</span>
+				</label>
+			</p>
+			{{end}}
+			{{with $field := field "s.Identifier" .}}
+			<p class="{{$field.ErrorClass}}">
+				<label>Identifier:
+					<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+					<span class="error">{{$field.Error}}</span>
+				</label>
+			</p>
+			{{end}}
+			{{with $field := field "s.Hue" .}}
+			<p class="{{$field.ErrorClass}}">
+				<label>Hue:
+					<input type="range" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="$('body').css('background-color', 'hsl(' + $(this).val() + ',61%,55%)');" />
+					<span class="error">{{$field.Error}}</span>
+				</label>
+			</p>
+			{{end}}
+			<p class="buttons">
+				<input type="submit" value="Create" />
+				<a class="button" href="{{url "Shops.Index"}}">Cancel</a>
+			</p>
+		</form>
+	</div>
+</div>
 
 {{template "footer.html" .}}

@@ -13,6 +13,7 @@ func init() {
 	revel.InterceptMethod((*GorpController).Rollback, revel.FINALLY)
 	revel.InterceptMethod((*Application).DetectShopIdentifierInHost,
 		revel.BEFORE)
+	revel.InterceptMethod((*Application).FetchShopList, revel.BEFORE)
 	revel.TemplateFuncs["hue"] = func(hue int) template.CSS {
 		return template.CSS(fmt.Sprintf("hsl(%d,61%%,55%%)", hue))
 	}
