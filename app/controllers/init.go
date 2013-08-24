@@ -25,6 +25,15 @@ func init() {
 		}
 		return ShopUrl(identifier, path), nil
 	}
+	revel.TemplateFuncs["postLink"] = func(url string, confirmation string) (
+		template.HTML, error) {
+		return template.HTML(fmt.Sprintf(
+			`<form style="display:inline;" action="%s" method="POST"><a href="#" onclick="$(this).closest('form').submit();return false;">`,
+			template.HTMLEscapeString(url))), nil
+	}
+	revel.TemplateFuncs["endPostLink"] = func() (template.HTML, error) {
+		return template.HTML("</a></form>"), nil
+	}
 }
 
 func ShopUrl(identifier string, path string) string {

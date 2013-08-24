@@ -1,4 +1,4 @@
-{{set . "title" "New Shop"}}
+{{set . "title" "Edit Shop"}}
 {{template "header.html" .}}
 
 <div class="leader">
@@ -12,13 +12,13 @@
 <div class="content">
 	<div class="container">
 		<div class="page-heading">
-			<h1>New Shop</h1>
+			<h1>Edit Shop</h1>
 		</div>
 
-		<form action="{{url "Shops.Create"}}" method="POST">
+		<form action="{{url "Shops.Update"}} .Id" method="POST">
 			{{template "Shops/form.html" .}}
 			<p class="buttons">
-				<input type="submit" value="Create" />
+				<input type="submit" value="Update" />
 				<a class="button" href="{{url "Shops.Index"}}">Cancel</a>
 			</p>
 		</form>

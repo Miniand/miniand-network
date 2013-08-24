@@ -4,6 +4,7 @@ import (
 	"github.com/coopernurse/gorp"
 	"github.com/robfig/revel"
 	"regexp"
+	"strconv"
 	"time"
 )
 
@@ -35,6 +36,17 @@ func (sh *Shop) Validate(v *revel.Validation) {
 	v.Check(sh.Identifier, revel.Required{}, revel.MinSize{1}, revel.Match{
 		regexp.MustCompile(`^[a-z]+$`),
 	})
+}
+
+func (sh *Shop) ToStringMap() map[string]string {
+	return map[string]string{
+		"Id":               strconv.Itoa(int(sh.Id)),
+		"Identifier":       sh.Identifier,
+		"Name":             sh.Name,
+		"Hue":              strconv.Itoa(sh.Hue),
+		"ShortDescription": sh.ShortDescription,
+		"LongDescription":  sh.LongDescription,
+	}
 }
 
 func FindShopByName(name string, exe gorp.SqlExecutor) *Shop {

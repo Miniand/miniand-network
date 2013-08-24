@@ -22,6 +22,7 @@ GET     /products/new                           Products.New
 GET     /shops/                                 Shops.Index
 POST    /shops/                                 Shops.Create
 GET     /shops/new                              Shops.New
-
-# Catch all
-*       /:controller/:action                    :controller.:action
+GET     /shops/:id                              Shops.Show
+POST    /shops/:id                              Shops.Update
+GET     /shops/:id/edit                         Shops.Edit
+POST    /shops/:id/delete                       Shops.Delete

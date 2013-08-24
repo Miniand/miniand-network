@@ -1,0 +1,33 @@
+{{with $field := field "s.Id" .}}
+<input type="hidden" name="{{$field.Name}}" value="{{$field.Flash}}" />
+{{end}}
+{{with $field := field "s.Name" .}}
+<p class="{{$field.ErrorClass}}">
+	<label>Name:
+		<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+		<span class="error">{{$field.Error}}</span>
+	</label>
+</p>
+{{end}}
+{{with $field := field "s.Identifier" .}}
+<p class="{{$field.ErrorClass}}">
+	<label>Identifier:
+		<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
+		<span class="error">{{$field.Error}}</span>
+	</label>
+</p>
+{{end}}
+{{with $field := field "s.Hue" .}}
+<p class="{{$field.ErrorClass}}">
+	<label>Hue:
+		<input type="range" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="Miniand.setBackgroundToHue($(this).val());" />
+		<span class="error">{{$field.Error}}</span>
+		<script type="text/javascript">
+			window.addEventListener('load', function() {
+				Miniand.setBackgroundToHue(
+					$('[name="{{$field.Name}}"]').val());
+			});
+		</script>
+	</label>
+</p>
+{{end}}
