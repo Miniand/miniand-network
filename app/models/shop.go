@@ -8,22 +8,24 @@ import (
 )
 
 type Shop struct {
-	Id         int64
-	Created    int64
-	Updated    int64
-	Identifier string
-	Name       string
-	Hue        int
+	Id               int64
+	CreatedAt        int64
+	UpdatedAt        int64
+	Identifier       string
+	Name             string
+	Hue              int
+	ShortDescription string
+	LongDescription  string
 }
 
 func (sh *Shop) PreInsert(s gorp.SqlExecutor) error {
-	sh.Created = time.Now().UnixNano()
-	sh.Updated = sh.Created
+	sh.CreatedAt = time.Now().UnixNano()
+	sh.UpdatedAt = sh.CreatedAt
 	return nil
 }
 
 func (sh *Shop) PreUpdate(s gorp.SqlExecutor) error {
-	sh.Updated = time.Now().UnixNano()
+	sh.UpdatedAt = time.Now().UnixNano()
 	return nil
 }
 
