@@ -9,8 +9,14 @@
 			<form role="form" action="{{url "Products.Update" .product.Id}}" method="POST">
 				{{template "Products/form.html" .}}
 				<p class="buttons">
-					<input type="submit" value="Update" />
-					<a class="button" href="{{url "Products.AdminIndex"}}">Cancel</a>
+					<button class="btn btn-success" value="Save">
+						<span class="glyphicon glyphicon-floppy-disk"></span>
+						Save
+					</button>
+					<a class="btn btn-danger" href="{{url "Products.AdminShow" .product.Id}}">
+						<span class="glyphicon glyphicon-remove"></span>
+						Cancel
+					</a>
 				</p>
 			</form>
 		</div>

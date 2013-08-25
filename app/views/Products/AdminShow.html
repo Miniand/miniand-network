@@ -1,11 +1,23 @@
-{{set . "title" "New Product"}}
+{{set . "title" "Product"}}
 {{template "header.html" .}}
 
 <div class="content">
 	<div class="container">
 		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
 		<div class="col-md-9 col-xs-12">
-			<h1 class="page-header">Product: {{.product.Name}}</h1>
+			<h1 class="page-header">
+				Products: {{.product.Name}}
+				<small>
+					({{if .product.Active}}active{{else}}inactive{{end}})
+				</small>
+			</h1>
+			<div class="btn-group table-actions">
+				<a href="{{url "Products.AdminEdit" .product.Id}}" class="btn btn-primary">
+					<span class="glyphicon glyphicon-edit"></span>
+					Edit product
+				</a>
+			</div>
+			<p><strong>Description: </strong>{{.product.Description}}</p>
 		</div>
 	</div>
 </div>

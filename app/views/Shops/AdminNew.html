@@ -9,8 +9,14 @@
 			<form action="{{url "Shops.Create"}}" method="POST">
 				{{template "Shops/form.html" .}}
 				<p class="buttons">
-					<input type="submit" value="Create" />
-					<a class="button" href="{{url "Shops.AdminIndex"}}">Cancel</a>
+					<button class="btn btn-success" value="Save">
+						<span class="glyphicon glyphicon-floppy-disk"></span>
+						Save
+					</button>
+					<a class="btn btn-danger" href="{{url "Shops.AdminIndex"}}">
+						<span class="glyphicon glyphicon-remove"></span>
+						Cancel
+					</a>
 				</p>
 			</form>
 		</div>

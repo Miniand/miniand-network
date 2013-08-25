@@ -6,12 +6,17 @@
 		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
 		<div class="col-md-9 col-xs-12">
 			<h1 class="page-header">Edit Shop</h1>
-
 			<form action="{{url "Shops.Update" .shop.Id}}" method="POST">
 				{{template "Shops/form.html" .}}
 				<p class="buttons">
-					<input type="submit" value="Update" />
-					<a class="button" href="{{url "Shops.AdminIndex"}}">Cancel</a>
+					<button class="btn btn-success" value="Save">
+						<span class="glyphicon glyphicon-floppy-disk"></span>
+						Save
+					</button>
+					<a class="btn btn-danger" href="{{url "Shops.AdminIndex"}}">
+						<span class="glyphicon glyphicon-remove"></span>
+						Cancel
+					</a>
 				</p>
 			</form>
 		</div>

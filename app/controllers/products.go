@@ -35,7 +35,7 @@ func (c Products) Create(p models.Product) revel.Result {
 	if err != nil {
 		panic(err)
 	}
-	return c.Redirect(routes.Products.AdminIndex())
+	return c.Redirect(routes.Products.AdminShow(p.Id))
 }
 
 func (c Products) Delete(id int64) revel.Result {
@@ -57,7 +57,7 @@ func (c Products) Update(id int64, p models.Product) revel.Result {
 	if err != nil {
 		revel.ERROR.Fatalf("Could not update product %d: %s", id, err.Error())
 	}
-	return c.Redirect(routes.Products.AdminIndex())
+	return c.Redirect(routes.Products.AdminShow(id))
 }
 
 func (c Products) AdminIndex() revel.Result {

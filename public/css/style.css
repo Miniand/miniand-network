@@ -91,6 +91,7 @@ footer h4 {
 
 .table-actions {
 	float: right;
+	margin-left: 12px;
 	margin-bottom: 12px;
 }
 
