@@ -31,26 +31,26 @@ func (sh *Shop) PreUpdate(s gorp.SqlExecutor) error {
 	return nil
 }
 
-func (sh *Shop) Validate(v *revel.Validation) {
-	v.Required(sh.Name)
-	v.Required(sh.Identifier)
-	v.Match(sh.Identifier, regexp.MustCompile(`^[a-z\-]+$`))
-	v.Required(sh.Hue)
+func (s *Shop) Validate(v *revel.Validation) {
+	v.Required(s.Name)
+	v.Required(s.Identifier)
+	v.Match(s.Identifier, regexp.MustCompile(`^[a-z\-]+$`))
+	v.Required(s.Hue)
 }
 
-func (sh *Shop) ToStringMap() map[string]string {
+func (s *Shop) ToStringMap() map[string]string {
 	activeText := ""
-	if sh.Active {
+	if s.Active {
 		activeText = "true"
 	}
 	return map[string]string{
-		"Id":               strconv.Itoa(int(sh.Id)),
-		"Identifier":       sh.Identifier,
-		"Name":             sh.Name,
+		"Id":               strconv.Itoa(int(s.Id)),
+		"Identifier":       s.Identifier,
+		"Name":             s.Name,
 		"Active":           activeText,
-		"Hue":              strconv.Itoa(sh.Hue),
-		"ShortDescription": sh.ShortDescription,
-		"LongDescription":  sh.LongDescription,
+		"Hue":              strconv.Itoa(s.Hue),
+		"ShortDescription": s.ShortDescription,
+		"LongDescription":  s.LongDescription,
 	}
 }
 
