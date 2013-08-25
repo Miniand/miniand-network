@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/coopernurse/gorp"
+	"github.com/Miniand/gorp"
 	"time"
 )
 

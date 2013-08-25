@@ -9,6 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/public/css/toastr.min.css">
 		<link rel="shortcut icon" type="image/png" href="/favicon.png">
 		{{range .moreStyles}}
 			<link rel="stylesheet" type="text/css" href="/public/{{.}}">
@@ -19,6 +20,12 @@
 		<![endif]-->
 	</head>
 	<body style="background-color:{{hue .shopHue}};">
+		{{if .flash.error}}
+			<div id="error" style="display:none;">{{.flash.error}}</div>
+		{{end}}
+		{{if .flash.success}}
+			<div id="success" style="display:none;">{{.flash.success}}</div>
+		{{end}}
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -51,8 +58,6 @@
 								{{range .shops}}
 								<li><a href="{{shopUrl .Identifier "Application.Index"}}">{{.Name}}</a></li>
 								{{end}}
-								<li class="divider"></li>
-								<li><a href="{{url "Shops.New"}}">New shop</a></li>
 							</ul>
 						</li>
 						<form class="navbar-form navbar-left" role="search">

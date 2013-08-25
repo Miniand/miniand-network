@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/coopernurse/gorp"
+	"github.com/Miniand/gorp"
 	"github.com/robfig/revel"
+	"strconv"
 	"time"
 )
 
@@ -27,5 +28,19 @@ func (p *Product) PreUpdate(s gorp.SqlExecutor) error {
 }
 
 func (p *Product) Validate(v *revel.Validation) {
-	v.Check(p.Name, revel.Required{}, revel.MinSize{1})
+	v.Required(p.Name)
+	v.Required(p.Description)
+}
+
+func (p *Product) ToStringMap() map[string]string {
+	activeText := ""
+	if p.Active {
+		activeText = "true"
+	}
+	return map[string]string{
+		"Id":          strconv.Itoa(int(p.Id)),
+		"Name":        p.Name,
+		"Active":      activeText,
+		"Description": p.Description,
+	}
 }

@@ -11,7 +11,7 @@ type Shops struct {
 	Application
 }
 
-func (c Shops) Index() revel.Result {
+func (c Shops) AdminIndex() revel.Result {
 	var shops []*models.Shop
 	_, err := c.Txn.Select(&shops, "select * from Shop")
 	if err != nil {
@@ -20,7 +20,7 @@ func (c Shops) Index() revel.Result {
 	return c.Render(shops)
 }
 
-func (c Shops) New() revel.Result {
+func (c Shops) AdminNew() revel.Result {
 	return c.Render()
 }
 
@@ -29,13 +29,13 @@ func (c Shops) Create(s models.Shop) revel.Result {
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.Shops.New())
+		return c.Redirect(routes.Shops.AdminNew())
 	}
 	err := c.Txn.Insert(&s)
 	if err != nil {
 		revel.ERROR.Fatalf("Could not create shop: %s", err.Error())
 	}
-	return c.Redirect(ShopUrl(s.Identifier, routes.Application.Index()))
+	return c.Redirect(ShopUrl(s.Identifier, routes.Shops.AdminIndex()))
 }
 
 func (c Shops) Delete(id int64) revel.Result {
@@ -43,20 +43,16 @@ func (c Shops) Delete(id int64) revel.Result {
 	if err != nil {
 		revel.ERROR.Fatalf("Could not delete shop %d: %s", id, err.Error())
 	}
-	return c.Redirect(ShopUrl("", routes.Shops.Index()))
+	return c.Redirect(ShopUrl("", routes.Shops.AdminIndex()))
 }
 
-func (c Shops) Show(id int64) revel.Result {
-	return c.Redirect(routes.Shops.Index())
-}
-
-func (c Shops) Edit(id int64) revel.Result {
+func (c Shops) AdminEdit(id int64) revel.Result {
 	m, err := c.Txn.Get(models.Shop{}, id)
 	if err != nil {
 		revel.ERROR.Fatalf("Could not load shop %d for editing: %s", err.Error())
 	}
 	if m == nil {
-		return c.Redirect(routes.Shops.Index())
+		return c.Redirect(routes.Shops.AdminIndex())
 	}
 	shop := m.(*models.Shop)
 	// Set flash data to initialise form
@@ -74,11 +70,11 @@ func (c Shops) Update(id int64, s models.Shop) revel.Result {
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.Shops.Edit(id))
+		return c.Redirect(routes.Shops.AdminEdit(id))
 	}
 	_, err := c.Txn.Update(&s)
 	if err != nil {
 		revel.ERROR.Fatalf("Could not update shop %d: %s", id, err.Error())
 	}
-	return c.Redirect(ShopUrl(s.Identifier, routes.Application.Index()))
+	return c.Redirect(ShopUrl(s.Identifier, routes.Shops.AdminIndex()))
 }

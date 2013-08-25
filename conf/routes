@@ -15,14 +15,24 @@ GET     /favicon.png                            Application.Favicon
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath                       Static.Serve("public")
 
-GET     /products/                              Products.Index
-POST    /products/                              Products.Create
-GET     /products/new                           Products.New
+GET     /admin                                  Admin.Index
 
-GET     /shops/                                 Shops.Index
-POST    /shops/                                 Shops.Create
-GET     /shops/new                              Shops.New
-GET     /shops/:id                              Shops.Show
+# Product pages
+GET     /products                               Products.Index
+POST    /products                               Products.Create
+POST    /products/:id                           Products.Update
+POST    /products/:id/delete                    Products.Delete
+# Product admin pages
+GET     /admin/products                         Products.AdminIndex
+GET     /admin/products/new                     Products.AdminNew
+GET     /admin/products/:id                     Products.AdminShow
+GET     /admin/products/:id/edit                Products.AdminEdit
+
+# Shop pages
+POST    /shops                                  Shops.Create
 POST    /shops/:id                              Shops.Update
-GET     /shops/:id/edit                         Shops.Edit
 POST    /shops/:id/delete                       Shops.Delete
+# Shop admin pages
+GET     /admin/shops                            Shops.AdminIndex
+GET     /admin/shops/new                        Shops.AdminNew
+GET     /admin/shops/:id/edit                   Shops.AdminEdit

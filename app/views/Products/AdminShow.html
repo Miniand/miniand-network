@@ -1,0 +1,13 @@
+{{set . "title" "New Product"}}
+{{template "header.html" .}}
+
+<div class="content">
+	<div class="container">
+		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
+		<div class="col-md-9 col-xs-12">
+			<h1 class="page-header">Product: {{.product.Name}}</h1>
+		</div>
+	</div>
+</div>
+
+{{template "footer.html" .}}

@@ -1,0 +1,40 @@
+{{with $field := field "p.Id" .}}
+<input type="hidden" name="{{$field.Name}}" value="{{$field.Flash}}" />
+{{end}}
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+		{{with $field := field "p.Name" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Name
+				<input type="text" class="form-control" name="{{$field.Name}}" value="{{$field.Flash}}" />
+				<span class="help-block">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+	<div class="col-md-4 col-xs-12">
+		{{with $field := field "p.Active" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Active
+				<select name="{{$field.Name}}" class="form-control" value="{{$field.Flash}}">
+					{{option $field "true" "Active"}}
+					{{option $field "" "Inactive"}}
+				</select>
+				<span class="help-block">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		{{with $field := field "p.Description" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Description
+				<textarea name="{{$field.Name}}" class="form-control" rows="10">{{$field.Flash}}</textarea>
+				<span class="help-block">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>

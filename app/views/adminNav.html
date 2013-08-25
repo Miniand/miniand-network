@@ -1,0 +1,12 @@
+<h1 class="page-header">Menu</h1>
+<h4>Global</h4>
+<ul>
+	<li><a href="{{url "Shops.AdminIndex"}}">Shops</a></li>
+	<li><a href="{{url "Products.AdminIndex"}}">Products</a></li>
+</ul>
+{{if .shop}}
+<h4>Shop: {{.shop.Name}}</h4>
+<ul>
+	<li><a href="{{url "Products.AdminIndex"}}">Products in shop</a></li>
+</ul>
+{{end}}

@@ -1,33 +1,80 @@
 {{with $field := field "s.Id" .}}
 <input type="hidden" name="{{$field.Name}}" value="{{$field.Flash}}" />
 {{end}}
-{{with $field := field "s.Name" .}}
-<p class="{{$field.ErrorClass}}">
-	<label>Name:
-		<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
-		<span class="error">{{$field.Error}}</span>
-	</label>
-</p>
-{{end}}
-{{with $field := field "s.Identifier" .}}
-<p class="{{$field.ErrorClass}}">
-	<label>Identifier:
-		<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" />
-		<span class="error">{{$field.Error}}</span>
-	</label>
-</p>
-{{end}}
-{{with $field := field "s.Hue" .}}
-<p class="{{$field.ErrorClass}}">
-	<label>Hue:
-		<input type="range" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="Miniand.setBackgroundToHue($(this).val());" />
-		<span class="error">{{$field.Error}}</span>
-		<script type="text/javascript">
-			window.addEventListener('load', function() {
-				Miniand.setBackgroundToHue(
-					$('[name="{{$field.Name}}"]').val());
-			});
-		</script>
-	</label>
-</p>
-{{end}}
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+		{{with $field := field "s.Name" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Name:
+				<input type="text" class="form-control" name="{{$field.Name}}" value="{{$field.Flash}}" />
+				<span class="error">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+	<div class="col-md-4 col-xs-12">
+		{{with $field := field "s.Identifier" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Identifier:
+				<input type="text" class="form-control" name="{{$field.Name}}" value="{{$field.Flash}}" />
+				<span class="error">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+	<div class="col-md-4 col-xs-12">
+		{{with $field := field "s.Active" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Active:
+				<select name="{{$field.Name}}" class="form-control" value="{{$field.Flash}}">
+					{{option $field "true" "Active"}}
+					{{option $field "" "Inactive"}}
+				</select>
+				<span class="error">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		{{with $field := field "s.Hue" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Hue:
+				<input type="range" class="form-control" min="1" max="360" name="{{$field.Name}}" value="{{$field.Flash}}" onchange="Miniand.setBackgroundToHue($(this).val());" />
+				<span class="error">{{$field.Error}}</span>
+				<script type="text/javascript">
+					window.addEventListener('load', function() {
+						Miniand.setBackgroundToHue(
+							$('[name="{{$field.Name}}"]').val());
+					});
+				</script>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		{{with $field := field "s.ShortDescription" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Short Description:
+				<input type="text" class="form-control" name="{{$field.Name}}" value="{{$field.Flash}}" />
+				<span class="error">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+		{{with $field := field "s.LongDescription" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Long Description:
+				<textarea name="{{$field.Name}}" class="form-control" rows="10">{{$field.Flash}}</textarea>
+				<span class="error">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>

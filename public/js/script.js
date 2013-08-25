@@ -34,9 +34,20 @@
 				form.submit();
 			});
 		});
-	}
+	};
+	global.Miniand.showMessages = function() {
+		var error = $('#error');
+		if (error.size() > 0) {
+			toastr.error(error.html());
+		}
+		var success = $('#success');
+		if (success.size() > 0) {
+			toastr.success(success.html());
+		}
+	};
 }(this));
 
 $(document).ready(function() {
 	Miniand.parseLinks();
+	Miniand.showMessages();
 });

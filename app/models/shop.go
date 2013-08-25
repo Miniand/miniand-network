@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/coopernurse/gorp"
+	"github.com/Miniand/gorp"
 	"github.com/robfig/revel"
 	"regexp"
 	"strconv"
@@ -14,6 +14,7 @@ type Shop struct {
 	UpdatedAt        int64
 	Identifier       string
 	Name             string
+	Active           bool
 	Hue              int
 	ShortDescription string
 	LongDescription  string
@@ -31,18 +32,22 @@ func (sh *Shop) PreUpdate(s gorp.SqlExecutor) error {
 }
 
 func (sh *Shop) Validate(v *revel.Validation) {
-	v.Check(sh.Name, revel.Required{}, revel.MinSize{1})
-	v.Check(sh.Hue, revel.Required{})
-	v.Check(sh.Identifier, revel.Required{}, revel.MinSize{1}, revel.Match{
-		regexp.MustCompile(`^[a-z]+$`),
-	})
+	v.Required(sh.Name)
+	v.Required(sh.Identifier)
+	v.Match(sh.Identifier, regexp.MustCompile(`^[a-z\-]+$`))
+	v.Required(sh.Hue)
 }
 
 func (sh *Shop) ToStringMap() map[string]string {
+	activeText := ""
+	if sh.Active {
+		activeText = "true"
+	}
 	return map[string]string{
 		"Id":               strconv.Itoa(int(sh.Id)),
 		"Identifier":       sh.Identifier,
 		"Name":             sh.Name,
+		"Active":           activeText,
 		"Hue":              strconv.Itoa(sh.Hue),
 		"ShortDescription": sh.ShortDescription,
 		"LongDescription":  sh.LongDescription,

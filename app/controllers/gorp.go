@@ -3,12 +3,12 @@ package controllers
 import (
 	"database/sql"
 	"github.com/Miniand/miniand-network/app/models"
-	"github.com/coopernurse/gorp"
-	_ "github.com/lib/pq"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/Miniand/gorp"
+	_ "github.com/Miniand/pq"
+	_ "github.com/Miniand/go-sqlite3"
 	"github.com/robfig/revel"
 	"github.com/robfig/revel/modules/db/app"
-	_ "github.com/ziutek/mymysql/mysql"
+	_ "github.com/Miniand/mymysql/mysql"
 )
 
 var (

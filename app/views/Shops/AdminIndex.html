@@ -1,0 +1,43 @@
+{{set . "title" "Shops"}}
+{{template "header.html" .}}
+
+<div class="content">
+	<div class="container">
+		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
+		<div class="col-md-9 col-xs-12">
+			<h1 class="page-header">Shops</h1>
+			<div class="btn-group table-actions">
+				<a href="{{url "Shops.AdminNew"}}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add shop</a>
+			</div>
+			<table class="table">
+				<tr>
+					<th>Name</th>
+					<th>Identifier</th>
+					<th>Active</th>
+					<th>Actions</th>
+				</tr>
+				{{range .shops}}
+				<tr>
+					<td>
+						<span class="logo" style="background-color: {{hue .Hue}}"></span>
+						<a href="{{shopUrl .Identifier "Shops.AdminIndex"}}">{{.Name}}</a>
+					</td>
+					<td>{{.Identifier}}</td>
+					<td>
+						{{if .Active}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{end}}
+					</td>
+					<td>
+						<a href="{{url "Shops.AdminEdit" .Id}}" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+						<a href="#" data-post="{{url "Shops.Delete" .Id}}" data-confirm="Are you sure you want to delete the shop {{.Name}}?" title="Delete"><span class="glyphicon glyphicon-remove"></span></a>
+						<a href="{{shopUrl .Identifier "Application.Index"}}" title="View shop"><span class="glyphicon glyphicon-eye-open"></span></a>
+					</td>
+				</tr>
+				{{end}}
+			</table>
+		</div>
+	</div>
+</div>
+
+{{template "footer.html" .}}
