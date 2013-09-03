@@ -54,11 +54,10 @@ func (c Application) Index() revel.Result {
 	return c.Render()
 }
 
-func (c Application) Favicon() revel.Result {
+func (c Application) Favicon(hue int) revel.Result {
 	buf := bytes.NewBuffer([]byte{})
 	icon := image.NewRGBA(image.Rect(0, 0, FAVICON_SIZE, FAVICON_SIZE))
-	rgba := HSLToRGB(float64(c.RenderArgs["shopHue"].(int))/360,
-		FAVICON_S, FAVICON_L)
+	rgba := HSLToRGB(float64(hue)/360, FAVICON_S, FAVICON_L)
 	faviconHalf := float64(FAVICON_SIZE / 2)
 	for x := 0; x < FAVICON_SIZE; x++ {
 		for y := 0; y < FAVICON_SIZE; y++ {
