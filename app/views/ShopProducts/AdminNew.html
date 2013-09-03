@@ -1,0 +1,27 @@
+{{set . "title" "Add product to shop"}}
+{{template "header.html" .}}
+
+<div class="content">
+	<div class="container">
+		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
+		<div class="col-md-9 col-xs-12">
+			<h1 class="page-header">Add product to shop</h1>
+			<form role="form" action="{{url "ShopProducts.Create"}}" method="POST">
+				{{template "ShopProducts/form.html" .}}
+				<p class="buttons">
+					<button class="btn btn-success" value="Save">
+						<span class="glyphicon glyphicon-floppy-disk"></span>
+						Save
+					</button>
+					
+					<a class="btn btn-danger" href="{{if .returnUrl}}{{.returnUrl}}{{else}}{{url "Products.AdminIndex"}}{{end}}">
+						<span class="glyphicon glyphicon-remove"></span>
+						Cancel
+					</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
+
+{{template "footer.html" .}}

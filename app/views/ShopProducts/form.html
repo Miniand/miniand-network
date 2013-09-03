@@ -1,0 +1,38 @@
+{{with $field := field "sp.Id" .}}
+<input type="hidden" name="{{$field.Name}}" value="{{$field.Flash}}" />
+{{end}}
+{{if .returnUrl}}
+<input type="hidden" name="returnUrl" value="{{.returnUrl}}" />
+{{end}}
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		{{$shops := .shops}}
+		{{with $field := field "sp.ShopId" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Shop
+				<select name="{{$field.Name}}" class="form-control" value="{{$field.Flash}}">
+					{{range $shops}}
+					{{option $field (printf "%d" .Id) .Name}}
+					{{end}}
+				</select>
+				<span class="help-block">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+	<div class="col-md-6 col-xs-12">
+		{{$products := .products}}
+		{{with $field := field "sp.ProductId" .}}
+		<div class="form-group{{if $field.ErrorClass}} has-error{{end}}">
+			<label>Product
+				<select name="{{$field.Name}}" class="form-control" value="{{$field.Flash}}">
+					{{range $products}}
+					{{option $field (printf "%d" .Id) .Name}}
+					{{end}}
+				</select>
+				<span class="help-block">{{$field.Error}}</span>
+			</label>
+		</div>
+		{{end}}
+	</div>
+</div>

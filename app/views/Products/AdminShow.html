@@ -18,6 +18,47 @@
 				</a>
 			</div>
 			<p><strong>Description: </strong>{{.product.Description}}</p>
+			<div class="row">
+				<div class="col-md-8 col-xs-12">
+					<h3>
+						Variants
+						<a href="" class="btn btn-primary btn-xs">
+							<span class="glyphicon glyphicon-plus"></span>
+							Add variant
+						</a>
+					</h3>
+					{{range .variants}}
+					{{end}}
+				</div>
+				<div class="col-md-4 col-xs-12">
+					<h3>
+						Shops
+						<a href="{{url "ShopProducts.AdminNew"}}?productId={{.product.Id}}&amp;returnUrl={{url "Products.AdminShow" .product.Id}}" class="btn btn-primary btn-xs">
+							<span class="glyphicon glyphicon-plus"></span>
+							Add to shop
+						</a>
+					</h3>
+					<table class="table">
+						<tr>
+							<th>Shop</th>
+							<th>Actions</th>
+						</tr>
+						{{$productId := .product.Id}}
+						{{range .productShops}}
+						<tr>
+							<td>
+								<span class="logo" style="background-color: {{hue .Hue}}"></span>
+								<a href="{{url "Shops.AdminShow" .ShopId}}">{{.Name}}</a>
+							</td>
+							<td>
+								<a href="" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" data-post="{{url "ShopProducts.Delete" .Id}}?returnUrl={{url "Products.AdminShow" $productId}}" data-confirm="Are you sure you want to remove this product from the shop {{.Name}}?" title="Delete"><span class="glyphicon glyphicon-remove"></span></a>
+							</td>
+						</tr>
+						{{end}}
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

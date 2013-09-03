@@ -24,6 +24,10 @@ func (c Shops) AdminNew() revel.Result {
 	return c.Render()
 }
 
+func (c Shops) AdminShow(id int) revel.Result {
+	return c.Redirect(routes.Shops.AdminIndex())
+}
+
 func (c Shops) Create(s models.Shop) revel.Result {
 	s.Validate(c.Validation)
 	if c.Validation.HasErrors() {

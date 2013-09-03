@@ -11,6 +11,13 @@ type Products struct {
 	Application
 }
 
+type ProductShop struct {
+	Id     int64
+	ShopId int64
+	Hue    int
+	Name   string
+}
+
 func (c Products) Index() revel.Result {
 	var products []*models.Product
 	_, err := c.Txn.Select(&products, "select * from Product")
@@ -90,6 +97,9 @@ func (c Products) AdminEdit(id int64) revel.Result {
 }
 
 func (c Products) AdminShow(id int64) revel.Result {
+	var (
+		productShops []*ProductShop
+	)
 	m, err := c.Txn.Get(models.Product{}, id)
 	if err != nil {
 		revel.ERROR.Fatalf("Could not load product %d for editing: %s",
@@ -99,5 +109,14 @@ func (c Products) AdminShow(id int64) revel.Result {
 		return c.Redirect(routes.Products.AdminIndex())
 	}
 	product := m.(*models.Product)
-	return c.Render(product)
+	if _, err := c.Txn.Select(&productShops, `
+SELECT sp.Id, sp.ShopId, s.Hue, s.Name
+FROM ShopProduct sp
+INNER JOIN Shop s
+ON sp.ShopId = s.Id
+	`); err != nil {
+		revel.ERROR.Fatalf("Could not select product shops: %s", err.Error())
+	}
+
+	return c.Render(product, productShops)
 }

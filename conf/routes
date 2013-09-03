@@ -34,4 +34,11 @@ POST    /shops/:id/delete                       Shops.Delete
 # Shop admin pages
 GET     /admin/shops                            Shops.AdminIndex
 GET     /admin/shops/new                        Shops.AdminNew
+GET     /admin/shops/:id                        Shops.AdminShow
 GET     /admin/shops/:id/edit                   Shops.AdminEdit
+
+# Shop product pages
+POST    /shop-products                          ShopProducts.Create
+POST    /shop-products/:id/delete               ShopProducts.Delete
+# Shop product admin pages
+GET     /admin/shop-products/new                ShopProducts.AdminNew
