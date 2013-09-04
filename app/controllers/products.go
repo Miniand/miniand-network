@@ -114,7 +114,8 @@ SELECT sp.Id, sp.ShopId, s.Hue, s.Name
 FROM ShopProduct sp
 INNER JOIN Shop s
 ON sp.ShopId = s.Id
-	`); err != nil {
+WHERE sp.ProductId = ?
+	`, product.Id); err != nil {
 		revel.ERROR.Fatalf("Could not select product shops: %s", err.Error())
 	}
 
