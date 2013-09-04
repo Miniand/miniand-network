@@ -21,6 +21,12 @@ type shopProductForProduct struct {
 	Name   string
 }
 
+type shopProductForShop struct {
+	Id        int64
+	ProductId int64
+	Name      string
+}
+
 func (sp *ShopProduct) Validate(v *revel.Validation, exe gorp.SqlExecutor) {
 	var shopProducts []*ShopProduct
 	if sp.ShopId == 0 {
@@ -61,6 +67,18 @@ FROM ShopProduct sp
 INNER JOIN Shop s
 ON sp.ShopId = s.Id
 WHERE sp.ProductId = ?
+	`, id)
+	return
+}
+
+func AllShopProductsForShop(id int64, exe gorp.SqlExecutor) (
+	shopProducts []*shopProductForShop, err error) {
+	_, err = exe.Select(&shopProducts, `
+SELECT sp.Id, sp.ProductId, p.Name
+FROM ShopProduct sp
+INNER JOIN Product p
+ON sp.ProductId = p.Id
+WHERE sp.ShopId = ?
 	`, id)
 	return
 }

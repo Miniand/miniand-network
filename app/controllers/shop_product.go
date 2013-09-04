@@ -40,7 +40,7 @@ func (c ShopProducts) Create(sp models.ShopProduct) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.ShopProducts.AdminNew(0, 0, returnUrl))
 	}
-	return c.Redirect(routes.Products.AdminShow(sp.ProductId))
+	return c.Redirect(returnUrl)
 }
 
 func (c ShopProducts) Delete(id int64) revel.Result {

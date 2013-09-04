@@ -97,6 +97,5 @@ func (c Products) AdminShow(id int64) revel.Result {
 	if err != nil {
 		revel.ERROR.Fatalf("Could not select product shops: %s", err.Error())
 	}
-
 	return c.Render(product, productShops)
 }

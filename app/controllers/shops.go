@@ -23,8 +23,20 @@ func (c Shops) AdminNew() revel.Result {
 	return c.Render()
 }
 
-func (c Shops) AdminShow(id int) revel.Result {
-	return c.Redirect(routes.Shops.AdminIndex())
+func (c Shops) AdminShow(id int64) revel.Result {
+	shop, err := models.FindShop(id, c.Txn)
+	if err != nil {
+		revel.ERROR.Fatalf("Could not load shop %d for viewing: %s",
+			err.Error())
+	}
+	if shop == nil {
+		return c.Redirect(routes.Shops.AdminIndex())
+	}
+	productShops, err := models.AllShopProductsForShop(id, c.Txn)
+	if err != nil {
+		revel.ERROR.Fatalf("Could not select product shops: %s", err.Error())
+	}
+	return c.Render(shop, productShops)
 }
 
 func (c Shops) Create(s models.Shop) revel.Result {
@@ -37,7 +49,7 @@ func (c Shops) Create(s models.Shop) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.Shops.AdminNew())
 	}
-	return c.Redirect(ShopUrl(s.Identifier, routes.Shops.AdminIndex()))
+	return c.Redirect(ShopUrl(s.Identifier, routes.Shops.AdminShow(s.Id)))
 }
 
 func (c Shops) Delete(id int64) revel.Result {

@@ -1,0 +1,53 @@
+{{set . "title" "Shop"}}
+{{template "header.html" .}}
+
+<div class="content">
+	<div class="container">
+		<div class="col-md-3 col-xs-12">{{template "adminNav.html" .}}</div>
+		<div class="col-md-9 col-xs-12">
+			<h1 class="page-header">
+				Shops: {{.shop.Name}}
+				<small>
+					({{if .shop.Active}}active{{else}}inactive{{end}})
+				</small>
+			</h1>
+			<div class="btn-group table-actions">
+				<a href="{{url "Shops.AdminEdit" .shop.Id}}" class="btn btn-primary">
+					<span class="glyphicon glyphicon-edit"></span>
+					Edit shop
+				</a>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>
+						Products
+						<a href="{{url "ShopProducts.AdminNew"}}?shopId={{.shop.Id}}&amp;returnUrl={{url "Shops.AdminShow" .shop.Id}}" class="btn btn-primary btn-xs">
+							<span class="glyphicon glyphicon-plus"></span>
+							Add product
+						</a>
+					</h3>
+					<table class="table">
+						<tr>
+							<th>Product</th>
+							<th>Actions</th>
+						</tr>
+						{{$shopId := .shop.Id}}
+						{{range .productShops}}
+						<tr>
+							<td>
+								<a href="{{url "Products.AdminShow" .ProductId}}">{{.Name}}</a>
+							</td>
+							<td>
+								<a href="" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" data-post="{{url "ShopProducts.Delete" .Id}}?returnUrl={{url "Shops.AdminShow" $shopId}}" data-confirm="Are you sure you want to remove the product {{.Name}} from this shop?" title="Delete"><span class="glyphicon glyphicon-remove"></span></a>
+							</td>
+						</tr>
+						{{end}}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{template "footer.html" .}}
