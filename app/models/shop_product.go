@@ -21,7 +21,7 @@ type shopProductForProduct struct {
 	Name   string
 }
 
-func (sp *ShopProduct) Validate(v *revel.Validation, txn *gorp.Transaction) {
+func (sp *ShopProduct) Validate(v *revel.Validation, exe gorp.SqlExecutor) {
 	var shopProducts []*ShopProduct
 	if sp.ShopId == 0 {
 		v.Error("You must choose a shop").Key("sp.ShopId")
@@ -29,7 +29,7 @@ func (sp *ShopProduct) Validate(v *revel.Validation, txn *gorp.Transaction) {
 	if sp.ProductId == 0 {
 		v.Error("You must choose a product").Key("sp.ProductId")
 	}
-	if _, err := txn.Select(&shopProducts, `
+	if _, err := exe.Select(&shopProducts, `
 SELECT * from ShopProduct
 WHERE Id <> ?
 AND ShopId = ?
@@ -53,9 +53,9 @@ func (sp *ShopProduct) PreUpdate(s gorp.SqlExecutor) error {
 	return nil
 }
 
-func AllShopProductsForProduct(id int64, txn *gorp.Transaction) (
+func AllShopProductsForProduct(id int64, exe gorp.SqlExecutor) (
 	shopProducts []*shopProductForProduct, err error) {
-	_, err = txn.Select(&shopProducts, `
+	_, err = exe.Select(&shopProducts, `
 SELECT sp.Id, sp.ShopId, s.Hue, s.Name
 FROM ShopProduct sp
 INNER JOIN Shop s
@@ -63,4 +63,18 @@ ON sp.ShopId = s.Id
 WHERE sp.ProductId = ?
 	`, id)
 	return
+}
+
+func CreateShopProduct(sp *ShopProduct, v *revel.Validation,
+	exe gorp.SqlExecutor) error {
+	sp.Validate(v, exe)
+	if v.HasErrors() {
+		return nil
+	}
+	return exe.Insert(sp)
+}
+
+func DeleteShopProduct(id int64, exe gorp.SqlExecutor) error {
+	_, err := exe.Delete(&ShopProduct{Id: id})
+	return err
 }

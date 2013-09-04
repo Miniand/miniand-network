@@ -79,3 +79,8 @@ func FindShopByIdentifier(identifier string, exe gorp.SqlExecutor) *Shop {
 	}
 	return nil
 }
+
+func AllShops(exe gorp.SqlExecutor) (shops []*Shop, err error) {
+	_, err = exe.Select(&shops, "SELECT * FROM Shop")
+	return
+}
