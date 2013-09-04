@@ -84,3 +84,36 @@ func AllShops(exe gorp.SqlExecutor) (shops []*Shop, err error) {
 	_, err = exe.Select(&shops, "SELECT * FROM Shop")
 	return
 }
+
+func CreateShop(s *Shop, v *revel.Validation, exe gorp.SqlExecutor) error {
+	s.Validate(v)
+	if v.HasErrors() {
+		return nil
+	}
+	return exe.Insert(s)
+}
+
+func DeleteShop(id int64, exe gorp.SqlExecutor) error {
+	_, err := exe.Delete(&Shop{Id: id})
+	return err
+}
+
+func UpdateShop(s *Shop, v *revel.Validation, exe gorp.SqlExecutor) error {
+	s.Validate(v)
+	if v.HasErrors() {
+		return nil
+	}
+	_, err := exe.Update(s)
+	return err
+}
+
+func FindShop(id int64, exe gorp.SqlExecutor) (*Shop, error) {
+	m, err := exe.Get(Shop{}, id)
+	if err != nil {
+		revel.ERROR.Fatalf("Could not find shop %d: %s", id, err.Error())
+	}
+	if m == nil {
+		return nil, nil
+	}
+	return m.(*Shop), nil
+}
