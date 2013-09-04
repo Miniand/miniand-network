@@ -14,6 +14,13 @@ type ShopProduct struct {
 	ProductId int64
 }
 
+type shopProductForProduct struct {
+	Id     int64
+	ShopId int64
+	Hue    int
+	Name   string
+}
+
 func (sp *ShopProduct) Validate(v *revel.Validation, txn *gorp.Transaction) {
 	var shopProducts []*ShopProduct
 	if sp.ShopId == 0 {
@@ -44,4 +51,16 @@ func (sp *ShopProduct) PreInsert(s gorp.SqlExecutor) error {
 func (sp *ShopProduct) PreUpdate(s gorp.SqlExecutor) error {
 	sp.UpdatedAt = time.Now().UnixNano()
 	return nil
+}
+
+func AllShopProductsForProduct(id int64, txn *gorp.Transaction) (
+	shopProducts []*shopProductForProduct, err error) {
+	_, err = txn.Select(&shopProducts, `
+SELECT sp.Id, sp.ShopId, s.Hue, s.Name
+FROM ShopProduct sp
+INNER JOIN Shop s
+ON sp.ShopId = s.Id
+WHERE sp.ProductId = ?
+	`, id)
+	return
 }
