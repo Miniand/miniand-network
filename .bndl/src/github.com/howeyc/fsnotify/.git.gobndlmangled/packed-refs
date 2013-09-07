@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled 
+541b3dff430cc31643d257dff15ec6eb9971785d refs/remotes/origin/error-more-data
+51d76615d2eda89230dccd9878e383fc015f462b refs/remotes/origin/evtonly
+bcc857f77f8071205890bb5fd3cb43202be4a7af refs/remotes/origin/go-exp
+3ddc2282d2b20a50950957b7f1ecb194d67c913f refs/remotes/origin/issue-33
+7beb45183d2ab48bfc9616d9a019513a123a4983 refs/remotes/origin/master
+2d1ae1e0a8fe992046e6013aabb951f96db9bda1 refs/remotes/origin/windows
+a2fe9241e4d7fa5805cf17db1b368b010f322947 refs/remotes/origin/windows-moredata
