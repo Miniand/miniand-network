@@ -19,6 +19,18 @@ func (c Products) Index() revel.Result {
 	return c.Render(products)
 }
 
+func (c Products) Show(id int64) revel.Result {
+	product, err := models.FindProduct(id, c.Txn)
+	if err != nil {
+		revel.ERROR.Fatalf("Could not load product %d for viewing: %s",
+			err.Error())
+	}
+	if product == nil {
+		return c.Redirect(routes.Products.Index())
+	}
+	return c.Render(product)
+}
+
 func (c Products) AdminNew() revel.Result {
 	return c.Render()
 }

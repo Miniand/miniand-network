@@ -5,6 +5,10 @@ package sqlite3
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __CYGWIN__
+# include <errno.h>
+#endif
+
 #ifndef SQLITE_OPEN_READWRITE
 # define SQLITE_OPEN_READWRITE 0
 #endif
@@ -129,9 +133,72 @@ func (tx *SQLiteTx) Rollback() error {
 	return nil
 }
 
+// AutoCommit return which currently auto commit or not.
 func (c *SQLiteConn) AutoCommit() bool {
 	return int(C.sqlite3_get_autocommit(c.db)) != 0
 }
+
+// TODO: Execer & Queryer currently disabled
+// https://github.com/mattn/go-sqlite3/issues/82
+//// Implements Execer
+//func (c *SQLiteConn) Exec(query string, args []driver.Value) (driver.Result, error) {
+//	tx, err := c.Begin()
+//	if err != nil {
+//		return nil, err
+//	}
+//	for {
+//		s, err := c.Prepare(query)
+//		if err != nil {
+//			tx.Rollback()
+//			return nil, err
+//		}
+//		na := s.NumInput()
+//		res, err := s.Exec(args[:na])
+//		if err != nil && err != driver.ErrSkip {
+//			tx.Rollback()
+//			s.Close()
+//			return nil, err
+//		}
+//		args = args[na:]
+//		tail := s.(*SQLiteStmt).t
+//		if tail == "" {
+//			tx.Commit()
+//			return res, nil
+//		}
+//		s.Close()
+//		query = tail
+//	}
+//}
+//
+//// Implements Queryer
+//func (c *SQLiteConn) Query(query string, args []driver.Value) (driver.Rows, error) {
+//	tx, err := c.Begin()
+//	if err != nil {
+//		return nil, err
+//	}
+//	for {
+//		s, err := c.Prepare(query)
+//		if err != nil {
+//			tx.Rollback()
+//			return nil, err
+//		}
+//		na := s.NumInput()
+//		rows, err := s.Query(args[:na])
+//		if err != nil && err != driver.ErrSkip {
+//			tx.Rollback()
+//			s.Close()
+//			return nil, err
+//		}
+//		args = args[na:]
+//		tail := s.(*SQLiteStmt).t
+//		if tail == "" {
+//			tx.Commit()
+//			return rows, nil
+//		}
+//		s.Close()
+//		query = tail
+//	}
+//}
 
 func (c *SQLiteConn) exec(cmd string) error {
 	pcmd := C.CString(cmd)
@@ -244,14 +311,14 @@ func (c *SQLiteConn) Prepare(query string) (driver.Stmt, error) {
 	pquery := C.CString(query)
 	defer C.free(unsafe.Pointer(pquery))
 	var s *C.sqlite3_stmt
-	var perror *C.char
-	rv := C.sqlite3_prepare_v2(c.db, pquery, -1, &s, &perror)
+	var tail *C.char
+	rv := C.sqlite3_prepare_v2(c.db, pquery, -1, &s, &tail)
 	if rv != C.SQLITE_OK {
 		return nil, ErrNo(rv)
 	}
 	var t string
-	if perror != nil && C.strlen(perror) > 0 {
-		t = C.GoString(perror)
+	if tail != nil && C.strlen(tail) > 0 {
+		t = strings.TrimSpace(C.GoString(tail))
 	}
 	return &SQLiteStmt{c: c, s: s, t: t}, nil
 }
@@ -368,6 +435,9 @@ func (s *SQLiteStmt) Exec(args []driver.Value) (driver.Result, error) {
 
 // Close the rows.
 func (rc *SQLiteRows) Close() error {
+	if rc.s.closed {
+		return nil
+	}
 	rv := C.sqlite3_reset(rc.s.s)
 	if rv != C.SQLITE_OK {
 		return ErrNo(rv)
@@ -393,7 +463,11 @@ func (rc *SQLiteRows) Next(dest []driver.Value) error {
 		return io.EOF
 	}
 	if rv != C.SQLITE_ROW {
-		return ErrNo(rv)
+		rv = C.sqlite3_reset(rc.s.s)
+		if rv != C.SQLITE_OK {
+			return ErrNo(rv)
+		}
+		return nil
 	}
 
 	if rc.decltype == nil {

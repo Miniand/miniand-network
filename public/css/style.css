@@ -34,14 +34,14 @@ h1.branded {
 	padding-bottom: 50px;
 }
 
-.leader h1 {
+.leader .branded {
 	font-size: 56px;
 	font-weight: bold;
 	color: white;
 	letter-spacing: 2px;
 }
 
-.leader h1 small {
+.leader .branded small {
 	color: #333;
 }
 
@@ -97,4 +97,29 @@ footer h4 {
 
 .form-group label {
 	width: 100%;
+}
+
+.product-title {
+	margin-bottom: 40px;
+	text-align: center;
+}
+
+.product-description {
+	white-space: pre-line;
+}
+
+.product-summary {
+	font-size: 1.3em;
+	line-height: 2.4em;
+	text-align: center;
+	background-color: white;
+	border: 1px solid #999;
+	margin-top: 40px;
+	border-radius: 8px;
+	padding: 36px;
+}
+
+.product-summary .price:before {
+	content: "Price: ";
+	font-weight: bold;
 }

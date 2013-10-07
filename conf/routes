@@ -19,6 +19,7 @@ GET     /admin                                  Admin.Index
 # Product pages
 GET     /products                               Products.Index
 POST    /products                               Products.Create
+GET     /products/:id                           Products.Show
 POST    /products/:id                           Products.Update
 POST    /products/:id/delete                    Products.Delete
 # Product admin pages

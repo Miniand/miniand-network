@@ -1,0 +1,36 @@
+{{set . "title" "Product"}}
+{{template "header.html" .}}
+
+<div class="leader">
+	<div class="container">
+		<h1 class="product-title visible-xs">{{.product.Name}}</h1>
+		<div class="col-md-6 col-xs-12">
+			<img style="width:100%" src="http://www.placehold.it/900x700" />
+		</div>
+		<div class="col-md-6 col-xs-12">
+			<h1 class="product-title hidden-xs">{{.product.Name}}</h1>		
+			<div class="product-summary col-md-8 col-md-offset-2">
+				<div class="price">$50</div>
+				<div class="quantity">
+					<strong>Quantity:</strong>
+					<select>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>
+				<button type="button" class="btn btn-lg btn-primary">
+					<span class="glyphicon glyphicon-shopping-cart"></span>
+					Add to cart
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="container">{{.product.Description}}</div>
+</div>
+
+{{template "footer.html" .}}
